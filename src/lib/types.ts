@@ -53,6 +53,7 @@ export type PortfolioData = {
   skills: Skill[];
   experiences: Experience[];
   projects: Project[];
+  impressions: ClientImpression[];
   faqs: Faq[];
 };
 
@@ -69,6 +70,13 @@ export type Message = {
   content: string;
   isRead: boolean;
   createdAt: string;
+};
+
+export type ClientImpression = {
+  id: string;
+  displayName: string;
+  roleDivision: string;
+  impression: string;
 };
 
 export type AnalyticsPoint = {

@@ -1,6 +1,6 @@
 import PublicPortfolio from "@/components/public-portfolio";
 import { prisma } from "@/lib/server/prisma";
-import type { Experience, PortfolioData, Profile, Project, Skill } from "@/lib/types";
+import type { ClientImpression, Experience, PortfolioData, Profile, Project, Skill } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export default async function HomePage() {
 }
 
 async function getPortfolioData(): Promise<PortfolioData> {
-  const [dbProfile, dbSkills, dbExperiences, dbProjects, dbFaqs] = await Promise.all([
+  const [dbProfile, dbSkills, dbExperiences, dbProjects, dbFaqs, dbImpressions] = await Promise.all([
     prisma.profile.findFirst({ orderBy: { updatedAt: "desc" } }),
     prisma.skill.findMany({ orderBy: [{ category: "asc" }, { order: "asc" }, { name: "asc" }] }),
     prisma.experience.findMany({ orderBy: [{ order: "asc" }, { startDate: "desc" }, { id: "asc" }] }),
@@ -19,6 +19,11 @@ async function getPortfolioData(): Promise<PortfolioData> {
       orderBy: [{ featured: "desc" }, { order: "asc" }, { createdAt: "desc" }, { id: "asc" }],
     }),
     prisma.faq.findMany({ where: { isVisible: true }, orderBy: [{ order: "asc" }, { createdAt: "asc" }] }),
+    prisma.clientImpression.findMany({
+      where: { isVisible: true, isPositive: true },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+      take: 50,
+    }),
   ]);
 
   const profile: Profile = {
@@ -57,11 +62,18 @@ async function getPortfolioData(): Promise<PortfolioData> {
     title: project.title,
     description: project.description ?? "",
     category: project.category ?? "Web Development",
-    portfolioUrl: project.portfolioUrl ?? "#",
+    portfolioUrl: project.portfolioUrl ?? "",
     repoUrl: project.repoUrl ?? undefined,
     imageUrl: project.imageUrl ?? "/assets/hero-robot-dashboard.png",
     tags: project.tags,
     featured: project.featured,
+  }));
+
+  const impressions: ClientImpression[] = pickRandomItems(dbImpressions, 10).map((item) => ({
+    id: item.id,
+    displayName: item.displayName,
+    roleDivision: item.roleDivision,
+    impression: item.impression,
   }));
 
   return {
@@ -75,6 +87,7 @@ async function getPortfolioData(): Promise<PortfolioData> {
     skills,
     experiences,
     projects,
+    impressions,
     faqs: dbFaqs.map((faq) => ({
       id: faq.id,
       question: faq.question,
@@ -88,4 +101,15 @@ function formatPeriod(startDate: Date, endDate: Date | null, isCurrent: boolean)
   const start = formatter.format(startDate);
   const end = isCurrent || !endDate ? "Present" : formatter.format(endDate);
   return `${start} - ${end}`;
+}
+
+function pickRandomItems<T>(items: T[], count: number) {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled.slice(0, count);
 }

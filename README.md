@@ -1,55 +1,63 @@
 # Rexy Anggala Putra Portfolio
 
-A modern personal portfolio website for Rexy Anggala Putra, built with Next.js, TypeScript, Tailwind CSS, Prisma, and PostgreSQL. The public site presents Rexy's profile, business intelligence experience, skills, projects, services, FAQ, contact form, visitor timer, and lightweight analytics.
+Modern portfolio website for Rexy Anggala Putra, built with Next.js, TypeScript, Tailwind CSS, Prisma, PostgreSQL, and Three.js. The site highlights Rexy's profile, featured projects, services, testimonials, contact channels, and analytics-driven public experience in a premium dark futuristic style.
 
 ## Highlights
 
-- Dark responsive portfolio UI with a blue/violet accent style.
-- Profile section powered by database content and local profile photo asset.
-- Skills grid with contextual icons for Python, SQL, BI tools, spreadsheets, databases, dashboards, reporting, and pipelines.
-- Experience timeline seeded from Rexy's professional profile.
-- Featured Projects section with category segments and view more/show less behavior.
-- Services and testimonials carousel with smooth directional navigation.
-- FAQ search and show more/show less controls.
-- Contact form with client-side validation and backend message storage.
-- Visitor session timer with hide/show behavior and backend duration tracking.
-- Public backend APIs for profile, skills, projects, experiences, FAQ, messages, analytics, and CV redirect.
+- Premium dark portfolio UI with glassmorphism, neon glow, and animated section reveals
+- Interactive hero section with a lazy-loaded Three.js futuristic robot scene
+- Database-backed portfolio content for profile, skills, experiences, projects, FAQ, impressions, messages, and visit analytics
+- Featured Projects updated with real demo links and optional GitHub links
+- Feedback page at `/feedback` for collecting visitor impressions
+- Testimonials sourced from positive impressions stored in PostgreSQL
+- Contact form with server validation and rate limiting
+- Visitor session timer plus anonymous active-duration tracking
+- Responsive layout for desktop, tablet, and mobile
 
 ## Tech Stack
 
-- Next.js App Router
+- Next.js 15 App Router
+- React 19
 - TypeScript
 - Tailwind CSS
 - Prisma ORM
-- PostgreSQL, currently configured for Neon through local environment variables
-- Zod validation
-- lucide-react icons
+- PostgreSQL
+- Zod
+- Three.js
+- lucide-react
 
 ## Project Structure
 
 ```txt
 src/
   app/
-    api/                 Public API routes
-    globals.css          Global styles and animations
-    layout.tsx           Root metadata/layout
-    page.tsx             Server-rendered portfolio page
+    api/                         Public API routes
+    feedback/page.tsx           Impression submission page
+    globals.css                 Global theme, animation, and hero styles
+    layout.tsx                  Root layout and metadata
+    page.tsx                    Server-rendered portfolio page
   components/
-    public-portfolio.tsx Main public portfolio UI
-    ui.tsx               Shared UI primitives
+    hero/
+      FuturisticRobotScene.tsx  Interactive Three.js robot scene
+      HeroBackground.tsx        Layered hero background effects
+      HeroSection.tsx           Main hero content and layout
+    impression-form.tsx         Feedback form UI
+    public-portfolio.tsx        Main public portfolio experience
+    hero-nebula-background.tsx  Animated hero background helper
+    ui.tsx                      Shared UI primitives
   lib/
-    server/              Prisma, request helpers, validation schemas
-    types.ts             Frontend data types
-    utils.ts             Formatting helpers
+    server/                     Prisma access, request helpers, validation
+    types.ts                    Shared frontend data types
+    utils.ts                    UI helpers and formatters
 prisma/
-  schema.prisma          Database models
-  seed.js                Seed content for profile, skills, experience, projects, FAQ
-public/assets/           Local visual assets
+  schema.prisma                 Database schema
+  seed.js                       Seed data for portfolio content
+public/assets/                  Local project illustration assets
 ```
 
 ## Environment Variables
 
-Create `.env` from `.env.example` and fill in your database values:
+Create `.env` and fill in the required values:
 
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
@@ -57,7 +65,7 @@ DIRECT_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
 RATE_LIMIT_SALT="replace-with-a-long-random-secret"
 ```
 
-Never commit `.env`; it is intentionally ignored by Git.
+Do not commit `.env`.
 
 ## Getting Started
 
@@ -73,19 +81,19 @@ Generate Prisma Client:
 npm run prisma:generate
 ```
 
-Run migrations:
+Apply database migrations:
 
 ```bash
 npm run prisma:migrate
 ```
 
-Seed portfolio content:
+Seed portfolio data:
 
 ```bash
 npm run prisma:seed
 ```
 
-Start development server:
+Start the dev server:
 
 ```bash
 npm run dev
@@ -104,6 +112,23 @@ npm run prisma:migrate
 npm run prisma:seed
 ```
 
+## Database Models
+
+- `Profile`
+- `Experience`
+- `Project`
+- `Skill`
+- `Faq`
+- `Message`
+- `ClientImpression`
+- `VisitSession`
+- `RateLimitEvent`
+
+## Public Routes
+
+- `/`
+- `/feedback`
+
 ## Public APIs
 
 - `GET /api/profile`
@@ -111,13 +136,29 @@ npm run prisma:seed
 - `GET /api/projects?cursor=&limit=`
 - `GET /api/experiences?cursor=&limit=`
 - `GET /api/faqs`
+- `GET /api/impressions`
+- `POST /api/impressions`
 - `POST /api/messages`
 - `POST /api/analytics/visit`
 - `POST /api/analytics/duration`
 - `GET /api/cv`
 
-## Notes
+## Current Content Notes
 
-- There is no admin dashboard, auth, upload flow, or CMS CRUD in the current version.
-- Portfolio content is seeded into PostgreSQL and can be edited manually in the database.
-- Featured Project data is still placeholder/sample content and is intended to be updated later with Rexy's real project links.
+- CV download points to the profile CV link stored in PostgreSQL
+- Featured projects now support separate demo and GitHub links
+- Testimonials are selected from positive impressions only
+- The site currently has no admin dashboard or CMS UI
+
+## Validation
+
+Recommended checks before deployment:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Repository
+
+Primary repository: [rexyanggalaputra/portofolio-web](https://github.com/rexyanggalaputra/portofolio-web)

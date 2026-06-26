@@ -1,0 +1,36 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="40" fill="#07111F"/>
+  <rect x="46" y="46" width="1108" height="658" rx="34" fill="url(#bg)"/>
+  <rect x="120" y="118" width="960" height="112" rx="28" fill="#0E1F35"/>
+  <text x="162" y="165" fill="#D5E7FF" font-family="Arial, sans-serif" font-size="30" font-weight="700">Simple Sales Performance Dashboard</text>
+  <text x="162" y="201" fill="#8FD4FF" font-family="Arial, sans-serif" font-size="17">Sales growth, revenue trend, and regional performance snapshot</text>
+  <rect x="120" y="278" width="440" height="300" rx="30" fill="#0E1F35"/>
+  <rect x="598" y="278" width="482" height="300" rx="30" fill="#0E1F35"/>
+  <text x="156" y="324" fill="#D5E7FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Monthly Revenue</text>
+  <g fill="#4CD8A5">
+    <rect x="164" y="494" width="42" height="48" rx="8"/>
+    <rect x="230" y="454" width="42" height="88" rx="8"/>
+    <rect x="296" y="406" width="42" height="136" rx="8"/>
+    <rect x="362" y="378" width="42" height="164" rx="8"/>
+    <rect x="428" y="338" width="42" height="204" rx="8"/>
+  </g>
+  <path d="M156 546H496" stroke="#28486A" stroke-width="3"/>
+  <text x="634" y="324" fill="#D5E7FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Growth Trend</text>
+  <path d="M656 494C708 452 744 462 786 420C828 378 874 394 920 340C950 304 988 286 1032 280" stroke="#72B7FF" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="656" cy="494" r="11" fill="#72B7FF"/>
+  <circle cx="786" cy="420" r="11" fill="#72B7FF"/>
+  <circle cx="920" cy="340" r="11" fill="#72B7FF"/>
+  <circle cx="1032" cy="280" r="11" fill="#72B7FF"/>
+  <rect x="120" y="620" width="300" height="42" rx="21" fill="#143256"/>
+  <text x="148" y="648" fill="#A5CFFF" font-family="Arial, sans-serif" font-size="17" font-weight="700">Best Month: September</text>
+  <rect x="448" y="620" width="252" height="42" rx="21" fill="#12394E"/>
+  <text x="476" y="648" fill="#82E4BE" font-family="Arial, sans-serif" font-size="17" font-weight="700">Growth: +24.8%</text>
+  <rect x="728" y="620" width="352" height="42" rx="21" fill="#153058"/>
+  <text x="756" y="648" fill="#FFD585" font-family="Arial, sans-serif" font-size="17" font-weight="700">Top Region: West Java</text>
+  <defs>
+    <linearGradient id="bg" x1="46" y1="46" x2="1154" y2="704" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08182C"/>
+      <stop offset="1" stop-color="#12304D"/>
+    </linearGradient>
+  </defs>
+</svg>

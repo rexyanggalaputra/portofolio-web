@@ -12,6 +12,13 @@ export const messageSchema = z.object({
   _honeypot: z.string().optional(),
 });
 
+export const impressionSchema = z.object({
+  displayName: z.string().trim().min(1, "Name is required").max(120),
+  roleDivision: z.string().trim().min(1, "Role or division is required").max(160),
+  impression: z.string().trim().min(1, "Impression is required").max(2000),
+  _honeypot: z.string().optional(),
+});
+
 export const visitSchema = z.object({
   visitorId: z.string().trim().min(8).max(160),
   path: z.string().trim().min(1).max(500).default("/"),

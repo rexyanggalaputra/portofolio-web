@@ -1,0 +1,38 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="40" fill="#0A0F1D"/>
+  <rect x="48" y="48" width="1104" height="654" rx="36" fill="url(#bg)"/>
+  <circle cx="248" cy="212" r="98" fill="#1E2845"/>
+  <circle cx="248" cy="212" r="62" fill="#F4C36B"/>
+  <path d="M248 156C271 156 290 175 290 198V224C290 247 271 266 248 266C225 266 206 247 206 224V198C206 175 225 156 248 156Z" fill="#18314E"/>
+  <path d="M214 296H282L266 370L248 352L230 370L214 296Z" fill="#C98E38"/>
+  <rect x="406" y="122" width="646" height="108" rx="28" fill="#101B32"/>
+  <text x="446" y="168" fill="#FFE2A8" font-family="Arial, sans-serif" font-size="30" font-weight="700">Nobel Prize Analysis</text>
+  <text x="446" y="202" fill="#D8E6FF" font-family="Arial, sans-serif" font-size="17">Interactive dashboard for laureate trends, categories, and country insights</text>
+  <rect x="406" y="270" width="300" height="312" rx="28" fill="#101B32"/>
+  <rect x="744" y="270" width="308" height="312" rx="28" fill="#101B32"/>
+  <text x="440" y="314" fill="#D8E6FF" font-family="Arial, sans-serif" font-size="21" font-weight="700">Awards by Category</text>
+  <g fill="#72B7FF">
+    <rect x="444" y="502" width="34" height="46" rx="8"/>
+    <rect x="500" y="456" width="34" height="92" rx="8"/>
+    <rect x="556" y="410" width="34" height="138" rx="8"/>
+    <rect x="612" y="370" width="34" height="178" rx="8"/>
+  </g>
+  <g stroke="#263F62" stroke-width="2">
+    <path d="M434 548H678"/>
+    <path d="M434 500H678"/>
+    <path d="M434 452H678"/>
+    <path d="M434 404H678"/>
+  </g>
+  <text x="778" y="314" fill="#D8E6FF" font-family="Arial, sans-serif" font-size="21" font-weight="700">Country Distribution</text>
+  <path d="M902 362C961 362 1010 411 1010 470C1010 529 961 578 902 578C843 578 794 529 794 470C794 411 843 362 902 362Z" fill="#20304E"/>
+  <path d="M902 410V470L950 500" stroke="#F4C36B" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="902" cy="470" r="26" fill="#F4C36B"/>
+  <path d="M838 418C864 388 916 382 960 400" stroke="#72B7FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M820 498C852 538 922 548 972 514" stroke="#5FE0C1" stroke-width="10" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="bg" x1="48" y1="48" x2="1152" y2="702" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1328"/>
+      <stop offset="1" stop-color="#112246"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -95,6 +95,20 @@ model Message {
   @@index([createdAt])
 }
 
+model ClientImpression {
+  id           String   @id @default(cuid())
+  displayName  String
+  roleDivision String
+  impression   String   @db.Text
+  isPositive   Boolean  @default(false)
+  isVisible    Boolean  @default(true)
+  ipHash       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isVisible, isPositive, createdAt])
+}
+
 model VisitSession {
   id         String   @id @default(cuid())
   visitorId  String

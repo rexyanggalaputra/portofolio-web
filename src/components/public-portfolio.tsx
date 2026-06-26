@@ -10,8 +10,9 @@ import {
   Code2,
   Database,
   FileSpreadsheet,
-  Download,
   ExternalLink,
+  GraduationCap,
+  Globe,
   Github,
   Gauge,
   GitBranch,
@@ -30,7 +31,8 @@ import {
   Table2,
   X,
 } from "lucide-react";
-import type { Experience, Faq, PortfolioData, Profile, Project, Skill, SocialLink } from "@/lib/types";
+import type { ClientImpression, Experience, Faq, PortfolioData, Profile, Project, Skill } from "@/lib/types";
+import HeroSection from "@/components/hero/HeroSection";
 import { cn, formatDuration, initials } from "@/lib/utils";
 import { Card, FieldLabel, inputClass } from "@/components/ui";
 
@@ -44,38 +46,29 @@ const navItems = [
   { href: "#contact", label: "Contact" },
 ];
 
-const iconMap: Record<SocialLink["kind"], React.ComponentType<{ className?: string }>> = {
-  whatsapp: WhatsAppIcon,
-  linkedin: Linkedin,
-  email: Mail,
-  github: Github,
-};
-
 const services = [
   { title: "BI Dashboards", copy: "Interactive dashboards for monitoring business performance.", icon: LayoutDashboard, color: "text-violet-300" },
   { title: "Data Pipeline", copy: "Automated reporting flows that reduce manual work.", icon: GitBranch, color: "text-sky-300" },
   { title: "Data Analysis", copy: "Actionable insights from complex operational data.", icon: ChartColumnBig, color: "text-emerald-300" },
   { title: "Reporting Automation", copy: "Reliable recurring reports for faster decisions.", icon: FileSpreadsheet, color: "text-amber-300" },
-];
-
-const testimonials = [
-  { name: "Analytics Partner", role: "Business Stakeholder", quote: "Rexy turns complex operational data into clear dashboards and decision-ready insights." },
-  { name: "Reporting Team", role: "Cross-functional Partner", quote: "His automation work makes recurring reporting faster, cleaner, and more reliable." },
-  { name: "Learning Cohort", role: "Data Mentoring", quote: "Rexy explains technical topics clearly and helps learners build confidence with data." },
+  { title: "Web Development", copy: "Functional web apps and portfolio experiences built for real users.", icon: Globe, color: "text-cyan-300" },
+  { title: "Teaching & Mentoring", copy: "Practical guidance for learners and teams growing in data and tech.", icon: GraduationCap, color: "text-rose-300" },
 ];
 
 export default function PublicPortfolio({ data }: { data: PortfolioData }) {
-  const { profile, socials, skills, projects, experiences, faqs } = data;
+  const { profile, socials, skills, projects, impressions, experiences, faqs } = data;
+
+  useSectionReveal();
 
   return (
     <main id="home" className="min-h-screen overflow-x-hidden">
       <Navbar />
-      <Hero profile={profile} socials={socials} />
+      <HeroSection profile={profile} socials={socials} />
       <About profile={profile} />
       <Skills skills={skills} />
       <Projects projects={projects} />
       <Services />
-      <Testimonials />
+      <Testimonials impressions={impressions} />
       <Experience experiences={experiences} />
       <Faq faqs={faqs} />
       <Contact profile={profile} />
@@ -87,6 +80,24 @@ export default function PublicPortfolio({ data }: { data: PortfolioData }) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const targets = navItems
+      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -68% 0px", threshold: [0, 0.2, 0.5] },
+    );
+    targets.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/8 bg-[#050917]/88 backdrop-blur-xl">
@@ -99,7 +110,7 @@ function Navbar() {
         </a>
         <div className="hidden items-center gap-2 md:flex">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="rounded-md px-3 py-2 text-sm text-slate-300 transition hover:bg-white/5 hover:text-white">
+            <a key={item.href} href={item.href} className={cn("nav-link rounded-md px-3 py-2 text-sm text-slate-300 transition hover:text-white", activeSection === item.href.slice(1) && "nav-link-active text-white")}>
               {item.label}
             </a>
           ))}
@@ -132,63 +143,24 @@ function Navbar() {
   );
 }
 
-function Hero({ profile, socials }: { profile: Profile; socials: SocialLink[] }) {
-  return (
-    <section className="relative mx-auto grid min-h-[520px] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-16">
-      <div className="relative z-10">
-        <p className="mb-5 inline-flex rounded-full border border-violet-400/35 bg-violet-500/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-violet-200">
-          AI-powered portfolio
-        </p>
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-          Hi, I&apos;m <span className="bg-gradient-to-r from-violet-400 to-sky-300 bg-clip-text text-transparent">{profile.fullName.split(" ")[0]}</span>
-          <br />
-          I Build Data Solutions that Drive Decisions.
-        </h1>
-        <p className="mt-5 max-w-xl text-base leading-8 text-slate-300">
-          {profile.tagline}
-        </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="#projects" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-gradient-to-r from-violet-500 to-sky-500 px-6 text-sm font-semibold text-white shadow-glow">
-            Explore My Work <ExternalLink className="size-4" />
-          </a>
-          <a href={profile.cvUrl ?? "#"} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-6 text-sm font-semibold text-white hover:border-violet-300/70">
-            Download CV <Download className="size-4" />
-          </a>
-        </div>
-        <div className="mt-7 flex flex-wrap items-center gap-3">
-          <span className="text-sm text-slate-300">Connect with me</span>
-          {socials.map((social) => {
-            const Icon = iconMap[social.kind];
-            return (
-              <a key={social.label} aria-label={social.label} href={social.href} className="grid size-11 place-items-center rounded-full border border-white/12 bg-white/5 text-slate-200 transition hover:border-violet-300/70 hover:text-white">
-                <Icon className="size-4" />
-              </a>
-            );
-          })}
-        </div>
-      </div>
-      <AiHeroVisual />
-    </section>
-  );
-}
-
-function AiHeroVisual() {
-  return (
-    <div className="relative min-h-[340px] overflow-hidden bg-transparent sm:min-h-[430px] lg:min-h-[500px]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_42%,rgba(124,58,237,0.28),transparent_17rem),radial-gradient(circle_at_80%_28%,rgba(14,165,233,0.24),transparent_18rem)]" />
-      <Image
-        src="/assets/hero-robot-dashboard.png"
-        alt="3D robotic AI assistant beside a glowing portfolio dashboard"
-        fill
-        priority
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        className="hero-robot-image scale-[1.12] object-cover object-[42%_50%] opacity-95 sm:scale-[1.08] lg:scale-[1.04] lg:object-center"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_38%,rgba(5,9,23,0.28)_64%,#050917_94%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#050917]/80 via-transparent to-[#050917]/70" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050917]/70 via-transparent to-[#050917]/75" />
-    </div>
-  );
+function useSectionReveal() {
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main section[id]:not(#home)"));
+    sections.forEach((section) => section.classList.add("section-reveal"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("section-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 }
 
 function About({ profile }: { profile: Profile }) {
@@ -375,7 +347,7 @@ function Projects({ projects }: { projects: Project[] }) {
         </div>
       </div>
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {visible.map((project) => (
+        {visible.length ? visible.map((project) => (
           <Card key={project.id} className="overflow-hidden transition hover:-translate-y-1 hover:border-violet-300/60">
             <div className="relative aspect-[16/10]">
               <Image src={project.imageUrl} alt={`${project.title} project preview`} fill sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
@@ -389,12 +361,35 @@ function Projects({ projects }: { projects: Project[] }) {
                   <span key={tag} className="text-xs text-violet-200">{tag}</span>
                 ))}
               </div>
-              <a href={project.portfolioUrl} className="mt-5 inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-violet-300/35 bg-violet-500/10 px-4 text-sm font-semibold text-white transition hover:border-violet-300/70 hover:bg-violet-500/20">
-                View Project <ExternalLink className="size-4" />
-              </a>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {project.portfolioUrl ? (
+                  <a
+                    href={project.portfolioUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-violet-300/35 bg-violet-500/10 px-4 text-sm font-semibold text-white transition hover:border-violet-300/70 hover:bg-violet-500/20"
+                  >
+                    View Demo <ExternalLink className="size-4" />
+                  </a>
+                ) : null}
+                {project.repoUrl ? (
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white transition hover:border-sky-300/70"
+                  >
+                    View Github <Github className="size-4" />
+                  </a>
+                ) : null}
+              </div>
             </div>
           </Card>
-        ))}
+        )) : (
+          <Card className="p-6 md:col-span-2 xl:col-span-4">
+            <p className="text-sm leading-7 text-slate-300">No project has been added to this category yet.</p>
+          </Card>
+        )}
       </div>
       {filteredProjects.length > 4 ? (
         <ViewToggle expanded={expanded} onClick={() => setCount(expanded ? 4 : filteredProjects.length)} moreLabel="View More Projects" />
@@ -444,41 +439,52 @@ function Services() {
   );
 }
 
-function Testimonials() {
+function Testimonials({ impressions }: { impressions: ClientImpression[] }) {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
-  const visibleCount = useCarouselVisibleCount(3);
-  const visible = getLoopItems(testimonials, active, visibleCount);
+  const visibleCount = useCarouselVisibleCount(Math.min(3, Math.max(impressions.length, 1)));
+  const visible = impressions.length ? getLoopItems(impressions, active, visibleCount) : [];
 
   function move(nextDirection: "next" | "prev") {
     setDirection(nextDirection);
-    setActive((value) => loopIndex(value + (nextDirection === "next" ? 1 : -1), testimonials.length));
+    setActive((value) => loopIndex(value + (nextDirection === "next" ? 1 : -1), Math.max(impressions.length, 1)));
   }
 
   return (
     <section id="testimonials" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <SectionTitle title="What Clients Say" />
-      <CarouselFrame
-        label="testimonials"
-        activeKey={active}
-        direction={direction}
-        columnsClass="sm:grid-cols-2 lg:grid-cols-3"
-        onPrevious={() => move("prev")}
-        onNext={() => move("next")}
-      >
-        {visible.map((testimonial, index) => (
-          <Card key={`${testimonial.item.name}-${testimonial.realIndex}-${index}`} className="p-6">
-            <p className="leading-7 text-slate-300">&ldquo;{testimonial.item.quote}&rdquo;</p>
-            <div className="mt-6 flex items-center gap-3">
-              <span className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-sky-400 text-sm font-bold text-white">{initials(testimonial.item.name)}</span>
-              <div>
-                <p className="font-semibold">{testimonial.item.name}</p>
-                <p className="text-sm text-slate-400">{testimonial.item.role}</p>
+      {visible.length ? (
+        <CarouselFrame
+          label="testimonials"
+          activeKey={active}
+          direction={direction}
+          columnsClass="sm:grid-cols-2 lg:grid-cols-3"
+          onPrevious={() => move("prev")}
+          onNext={() => move("next")}
+        >
+          {visible.map((testimonial, index) => (
+            <Card key={`${testimonial.item.displayName}-${testimonial.realIndex}-${index}`} className="p-6">
+              <p className="leading-7 text-slate-300">&ldquo;{testimonial.item.impression}&rdquo;</p>
+              <div className="mt-6 flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-sky-400 text-sm font-bold text-white">{initials(testimonial.item.displayName)}</span>
+                <div>
+                  <p className="font-semibold">{testimonial.item.displayName}</p>
+                  <p className="text-sm text-slate-400">{testimonial.item.roleDivision}</p>
+                </div>
               </div>
-            </div>
-          </Card>
-        ))}
-      </CarouselFrame>
+            </Card>
+          ))}
+        </CarouselFrame>
+      ) : (
+        <Card className="p-6">
+          <p className="leading-7 text-slate-300">Positive impressions from visitors will appear here after they submit feedback.</p>
+        </Card>
+      )}
+      <div className="mt-5 flex justify-center">
+        <a href="/feedback" className="inline-flex min-h-11 items-center justify-center rounded-full border border-violet-300/35 bg-violet-500/10 px-5 text-sm font-semibold text-white transition hover:border-violet-300/70 hover:bg-violet-500/20">
+          Give Your Impression to Rexy
+        </a>
+      </div>
     </section>
   );
 }
@@ -542,7 +548,11 @@ function Faq({ faqs }: { faqs: Faq[] }) {
                 {item.question}
                 <span className="text-violet-300">{isOpen ? "-" : "+"}</span>
               </button>
-              {isOpen ? <p className="border-t border-border px-5 py-4 leading-7 text-slate-300">{item.answer}</p> : null}
+              <div className={cn("faq-answer-grid", isOpen && "faq-answer-open")}>
+                <div>
+                  <p className="border-t border-border px-5 py-4 leading-7 text-slate-300">{item.answer}</p>
+                </div>
+              </div>
             </Card>
           );
         })}
@@ -815,21 +825,6 @@ function PostgresIcon({ className }: { className?: string }) {
     <svg viewBox="0 0 32 32" aria-hidden="true" className={className} fill="none">
       <path d="M16 3C10 3 5.5 7.2 5.5 13.8c0 4.1 1.6 7.8 4.2 10.1 1.2 1 2.3.4 2.2-1.2-.1-1.1 0-2.3.5-3 1 .3 2.2.5 3.6.5 5.9 0 10.5-3.9 10.5-9.1C26.5 6.3 22 3 16 3Z" fill="#38BDF8" opacity=".9" />
       <path d="M13 15c1.5 1.1 4.5 1.1 6 0M12 10.5h.1M20 10.5h.1M15.5 18.5c-.8 1.4-1 3.1-.7 5.1" stroke="#082F49" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={className} fill="none">
-      <path
-        fill="currentColor"
-        d="M16.02 3.2A12.36 12.36 0 0 0 5.47 22.02L4.1 28.35l6.48-1.34A12.36 12.36 0 1 0 16.02 3.2Zm0 2.3a10.06 10.06 0 0 1 8.56 15.34 10.06 10.06 0 0 1-13.72 3.58l-.38-.23-3.54.74.76-3.45-.25-.4A10.06 10.06 0 0 1 16.02 5.5Z"
-      />
-      <path
-        fill="currentColor"
-        d="M12.18 10.1c-.23 0-.6.08-.92.44-.32.35-1.22 1.18-1.22 2.88 0 1.7 1.25 3.36 1.42 3.58.17.23 2.42 3.86 6.03 5.25 2.99 1.16 3.61.93 4.26.87.65-.06 2.1-.86 2.4-1.7.3-.83.3-1.55.21-1.7-.09-.15-.33-.24-.69-.42-.36-.18-2.12-1.05-2.45-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.89-1.79-1.07-.95-1.79-2.12-2-2.48-.21-.36-.02-.55.16-.73.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.96-1.11-2.68-.29-.7-.59-.6-.81-.61l-.69-.02Z"
-      />
     </svg>
   );
 }

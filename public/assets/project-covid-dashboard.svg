@@ -1,0 +1,48 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="40" fill="#07111F"/>
+  <rect x="42" y="42" width="1116" height="666" rx="32" fill="url(#bg)"/>
+  <circle cx="225" cy="204" r="92" fill="#1B3555"/>
+  <circle cx="225" cy="204" r="46" fill="#36CFC9"/>
+  <g stroke="#36CFC9" stroke-width="12">
+    <path d="M225 78V128"/>
+    <path d="M225 280V330"/>
+    <path d="M99 204H149"/>
+    <path d="M301 204H351"/>
+    <path d="M135 114L169 148"/>
+    <path d="M281 260L315 294"/>
+    <path d="M315 114L281 148"/>
+    <path d="M169 260L135 294"/>
+  </g>
+  <rect x="410" y="126" width="650" height="90" rx="24" fill="#0D1E34"/>
+  <rect x="410" y="126" width="210" height="90" rx="24" fill="#17406A"/>
+  <rect x="650" y="126" width="180" height="90" rx="24" fill="#112A47"/>
+  <rect x="850" y="126" width="210" height="90" rx="24" fill="#112A47"/>
+  <text x="448" y="164" fill="#9AD7FF" font-family="Arial, sans-serif" font-size="24" font-weight="700">COVID-19</text>
+  <text x="448" y="194" fill="#D8EEFF" font-family="Arial, sans-serif" font-size="16">Dashboard Overview</text>
+  <text x="694" y="166" fill="#D8EEFF" font-family="Arial, sans-serif" font-size="15">Cases</text>
+  <text x="694" y="194" fill="#7CE5D8" font-family="Arial, sans-serif" font-size="28" font-weight="700">1.4M</text>
+  <text x="892" y="166" fill="#D8EEFF" font-family="Arial, sans-serif" font-size="15">Recovery Rate</text>
+  <text x="892" y="194" fill="#FFB86A" font-family="Arial, sans-serif" font-size="28" font-weight="700">92.3%</text>
+  <rect x="410" y="258" width="318" height="330" rx="28" fill="#0D1E34"/>
+  <rect x="742" y="258" width="318" height="330" rx="28" fill="#0D1E34"/>
+  <text x="442" y="304" fill="#D8EEFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Regional Trend</text>
+  <path d="M450 506C498 448 534 468 572 420C609 372 657 364 688 322" stroke="#36CFC9" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="450" cy="506" r="10" fill="#36CFC9"/>
+  <circle cx="572" cy="420" r="10" fill="#36CFC9"/>
+  <circle cx="688" cy="322" r="10" fill="#36CFC9"/>
+  <g fill="#1A3B61">
+    <rect x="450" y="536" width="44" height="30" rx="8"/>
+    <rect x="514" y="508" width="44" height="58" rx="8"/>
+    <rect x="578" y="476" width="44" height="90" rx="8"/>
+    <rect x="642" y="434" width="44" height="132" rx="8"/>
+  </g>
+  <text x="774" y="304" fill="#D8EEFF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Severity Mix</text>
+  <path d="M900 414L978 518L822 518L900 414Z" fill="#FFB86A"/>
+  <path d="M900 332C961 332 1010 381 1010 442C1010 503 961 552 900 552C839 552 790 503 790 442C790 381 839 332 900 332ZM900 376C863 376 834 405 834 442C834 479 863 508 900 508C937 508 966 479 966 442C966 405 937 376 900 376Z" fill="#203C61"/>
+  <defs>
+    <linearGradient id="bg" x1="42" y1="42" x2="1158" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#09182B"/>
+      <stop offset="1" stop-color="#0E2340"/>
+    </linearGradient>
+  </defs>
+</svg>

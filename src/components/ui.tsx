@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 
 export function Section({
@@ -48,8 +50,33 @@ export function ButtonLink({
   );
 }
 
-export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("rounded-lg border border-violet-400/15 bg-[#0b1024]/78 shadow-glow backdrop-blur", className)}>{children}</div>;
+export function Card({ children, className, interactive = true }: { children: React.ReactNode; className?: string; interactive?: boolean }) {
+  function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    if (!interactive || window.matchMedia("(hover: none), (prefers-reduced-motion: reduce)").matches) return;
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    event.currentTarget.style.setProperty("--card-rotate-x", `${(0.5 - y) * 5}deg`);
+    event.currentTarget.style.setProperty("--card-rotate-y", `${(x - 0.5) * 7}deg`);
+    event.currentTarget.style.setProperty("--card-glow-x", `${x * 100}%`);
+    event.currentTarget.style.setProperty("--card-glow-y", `${y * 100}%`);
+  }
+
+  function resetTilt(event: React.PointerEvent<HTMLDivElement>) {
+    event.currentTarget.style.setProperty("--card-rotate-x", "0deg");
+    event.currentTarget.style.setProperty("--card-rotate-y", "0deg");
+  }
+
+  return (
+    <div
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      className={cn("motion-card premium-card rounded-xl border border-violet-400/15 bg-[#0b1024]/78 shadow-glow backdrop-blur", className)}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function FieldLabel({ children }: { children: React.ReactNode }) {

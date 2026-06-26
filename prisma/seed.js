@@ -8,6 +8,7 @@ async function main() {
   await prisma.experience.deleteMany();
   await prisma.project.deleteMany();
   await prisma.faq.deleteMany();
+  await prisma.clientImpression.deleteMany();
 
   await prisma.profile.create({
     data: {
@@ -21,7 +22,7 @@ async function main() {
       whatsapp: "https://wa.me/",
       linkedin: "https://www.linkedin.com/in/rexyanggalaputra",
       github: "https://github.com/rexyanggalaputra",
-      cvUrl: null,
+      cvUrl: "https://drive.google.com/file/d/1kXIz11kx1v0s3JtnbRLHO6F6lfPrLTac/view?usp=sharing",
     },
   });
 
@@ -173,79 +174,71 @@ async function main() {
   await prisma.project.createMany({
     data: [
       {
-        title: "Insight CRM",
-        description: "A compact customer relationship dashboard with analytics, notes, and lead tracking.",
-        category: "Data Analysis",
-        portfolioUrl: "https://example.com",
-        repoUrl: "https://github.com",
-        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Next.js", "TypeScript", "Charts"],
+        title: "Covid-19 Dashboard",
+        description: "Interactive data visualization dashboard to monitor COVID-19 trends, case movements, and key public health indicators.",
+        category: "Data Visualization",
+        portfolioUrl: "https://drive.google.com/file/d/1CZemQHwgG16A3cJFoqJq1FwGJ6bJetAF/view?usp=sharing",
+        repoUrl: null,
+        imageUrl: "/assets/project-covid-dashboard.svg",
+        tags: ["Dashboard", "Visualization", "Health Data"],
         featured: true,
         order: 0,
       },
       {
-        title: "Launch Metrics",
-        description: "A conversion-focused analytics view for product launches and campaign performance.",
+        title: "Nobel Prize Analysis Dashboard",
+        description: "A dashboard exploring Nobel Prize winners, award categories, geographic patterns, and historical recognition trends.",
         category: "Data Visualization",
-        portfolioUrl: "https://example.com",
-        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-        tags: ["React", "Tailwind", "Analytics"],
+        portfolioUrl: "https://drive.google.com/file/d/1CWvdNryETpCBdJtghV6KrVr8iuZCr0R/view?usp=sharing",
+        repoUrl: null,
+        imageUrl: "/assets/project-nobel-analysis.svg",
+        tags: ["Dashboard", "Analytics", "Historical Data"],
         featured: true,
         order: 1,
       },
       {
-        title: "Portfolio CMS",
-        description: "A prototype for managing profile, projects, skills, FAQ, and visitor messages.",
-        category: "Web Development",
-        portfolioUrl: "https://example.com",
-        repoUrl: "https://github.com",
-        imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Next.js", "CMS", "Admin"],
-        featured: false,
+        title: "Simple Sales Performance Dashboard",
+        description: "A simple sales dashboard focused on revenue movement, growth monitoring, and performance comparisons across periods.",
+        category: "Data Visualization",
+        portfolioUrl: "https://drive.google.com/file/d/1-dKNAn5JTHfvCuS9Vi8gaRxeITfuTkIn/view?usp=sharing",
+        repoUrl: null,
+        imageUrl: "/assets/project-sales-dashboard.svg",
+        tags: ["Sales", "Performance", "Dashboard"],
+        featured: true,
         order: 2,
       },
       {
-        title: "Customer Churn Model",
-        description: "A predictive machine learning workflow for identifying churn risk and retention opportunities.",
-        category: "Machine Learning",
-        portfolioUrl: "https://example.com",
-        repoUrl: "https://github.com",
-        imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Python", "Scikit-learn", "ML"],
-        featured: false,
+        title: "Diabetes Classification",
+        description: "A data science classification app that predicts diabetes risk through an interactive web experience and deployable ML workflow.",
+        category: "Data Science",
+        portfolioUrl: "https://diabetarex-classification.vercel.app/login",
+        repoUrl: "https://github.com/rexyanggalaputra/diabetes-classification",
+        imageUrl: "/assets/project-diabetes-classification.svg",
+        tags: ["Data Science", "Classification", "Web App"],
+        featured: true,
         order: 3,
       },
-      {
-        title: "Sales Forecast Lab",
-        description: "A data science notebook project for forecasting revenue trends and seasonal demand.",
-        category: "Data Science",
-        portfolioUrl: "https://example.com",
-        imageUrl: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Python", "Forecasting", "Pandas"],
-        featured: false,
-        order: 4,
-      },
-      {
-        title: "Executive KPI Dashboard",
-        description: "A visual analytics dashboard for monitoring operational KPIs and performance trends.",
-        category: "Data Visualization",
-        portfolioUrl: "https://example.com",
-        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
-        tags: ["BI", "Charts", "Dashboard"],
-        featured: false,
-        order: 5,
-      },
-      {
-        title: "Market Basket Analysis",
-        description: "A data analysis project exploring purchase patterns, product affinity, and campaign opportunities.",
-        category: "Data Analysis",
-        portfolioUrl: "https://example.com",
-        imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-        tags: ["SQL", "Analysis", "Insights"],
-        featured: false,
-        order: 6,
-      },
     ],
+  });
+
+  await prisma.clientImpression.createMany({
+    data: [
+      ["A data partner who makes messy numbers feel simple and usable.", "Analytics Stakeholder"],
+      ["Rexy explains dashboards clearly and always connects them back to business decisions.", "Business User"],
+      ["The reporting flow became much easier to use after working with Rexy.", "Operations Team"],
+      ["His mentoring style is patient, practical, and very easy to follow.", "Mentee / Learner"],
+      ["I appreciate how structured and thoughtful his analytical approach is.", "Project Collaborator"],
+      ["Rexy delivers insights that are both detailed and easy for non-technical teams to understand.", "Management Team"],
+      ["He is reliable, responsive, and consistently brings clarity to data discussions.", "Cross-functional Partner"],
+      ["The dashboards he built helped us monitor performance with much more confidence.", "Reporting Stakeholder"],
+      ["Rexy combines technical depth with strong communication, which makes collaboration smooth.", "Team Partner"],
+      ["His work feels polished, impactful, and genuinely helpful for decision making.", "Client Impression"],
+    ].map(([impression, roleDivision], index) => ({
+      displayName: `Positive Note ${index + 1}`,
+      roleDivision,
+      impression,
+      isPositive: true,
+      isVisible: true,
+    })),
   });
 
   await prisma.faq.createMany({

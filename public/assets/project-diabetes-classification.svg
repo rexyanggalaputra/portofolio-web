@@ -1,0 +1,37 @@
+<svg width="1200" height="750" viewBox="0 0 1200 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="750" rx="40" fill="#07111F"/>
+  <rect x="44" y="44" width="1112" height="662" rx="34" fill="url(#bg)"/>
+  <rect x="124" y="112" width="952" height="126" rx="28" fill="#102033"/>
+  <text x="164" y="164" fill="#D7E7FF" font-family="Arial, sans-serif" font-size="31" font-weight="700">Diabetes Classification</text>
+  <text x="164" y="202" fill="#8ECEFF" font-family="Arial, sans-serif" font-size="17">Data science app for diabetes risk prediction with a web-based demo</text>
+  <rect x="124" y="286" width="380" height="328" rx="28" fill="#102033"/>
+  <rect x="548" y="286" width="528" height="328" rx="28" fill="#102033"/>
+  <text x="160" y="334" fill="#D7E7FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Model Inputs</text>
+  <g fill="#16395A">
+    <rect x="160" y="376" width="308" height="26" rx="13"/>
+    <rect x="160" y="426" width="308" height="26" rx="13"/>
+    <rect x="160" y="476" width="308" height="26" rx="13"/>
+    <rect x="160" y="526" width="308" height="26" rx="13"/>
+  </g>
+  <circle cx="314" cy="438" r="98" fill="#173659"/>
+  <path d="M314 388V488" stroke="#79C8FF" stroke-width="22" stroke-linecap="round"/>
+  <path d="M264 438H364" stroke="#79C8FF" stroke-width="22" stroke-linecap="round"/>
+  <text x="584" y="334" fill="#D7E7FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Prediction Overview</text>
+  <rect x="584" y="376" width="230" height="170" rx="26" fill="#16395A"/>
+  <rect x="840" y="376" width="200" height="170" rx="26" fill="#173659"/>
+  <text x="618" y="424" fill="#A8E6C0" font-family="Arial, sans-serif" font-size="18">Prediction Result</text>
+  <text x="618" y="486" fill="#A8E6C0" font-family="Arial, sans-serif" font-size="40" font-weight="700">Low Risk</text>
+  <text x="874" y="424" fill="#D7E7FF" font-family="Arial, sans-serif" font-size="18">Accuracy</text>
+  <text x="874" y="486" fill="#FFD37F" font-family="Arial, sans-serif" font-size="40" font-weight="700">87%</text>
+  <path d="M610 590C666 552 706 566 752 520C798 474 850 484 898 442C934 410 970 394 1014 382" stroke="#79C8FF" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="610" cy="590" r="10" fill="#79C8FF"/>
+  <circle cx="752" cy="520" r="10" fill="#79C8FF"/>
+  <circle cx="898" cy="442" r="10" fill="#79C8FF"/>
+  <circle cx="1014" cy="382" r="10" fill="#79C8FF"/>
+  <defs>
+    <linearGradient id="bg" x1="44" y1="44" x2="1156" y2="706" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08182C"/>
+      <stop offset="1" stop-color="#12304D"/>
+    </linearGradient>
+  </defs>
+</svg>
