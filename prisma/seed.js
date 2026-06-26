@@ -217,6 +217,17 @@ async function main() {
         featured: true,
         order: 3,
       },
+      {
+        title: "Mathematics World Web",
+        description: "An interactive educational website for exploring mathematics through engaging visual modules, formulas, and learning-friendly web experiences.",
+        category: "Web Development",
+        portfolioUrl: "https://mathematics-world-web.vercel.app/",
+        repoUrl: "https://github.com/rexyanggalaputra/mathematics-world-web",
+        imageUrl: "/assets/project-mathematics-world-web.svg",
+        tags: ["Web Development", "Education", "Interactive UI"],
+        featured: true,
+        order: 4,
+      },
     ],
   });
 
