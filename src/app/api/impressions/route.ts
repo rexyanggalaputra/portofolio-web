@@ -38,6 +38,7 @@ export async function POST(request: Request) {
         displayName: body.displayName,
         roleDivision: body.roleDivision,
         impression: preparedImpression,
+        originalImpression: body.impression,
         isPositive: isPositiveImpression(preparedImpression),
         ipHash: getClientFingerprint(request),
       },
