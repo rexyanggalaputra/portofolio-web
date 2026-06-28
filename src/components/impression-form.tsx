@@ -7,7 +7,7 @@ import { FieldLabel, inputClass } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 export default function ImpressionForm() {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [errors, setErrors] = useState<{ displayName?: string; roleDivision?: string; impression?: string }>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -26,12 +26,12 @@ export default function ImpressionForm() {
 
     setErrors(nextErrors);
     if (nextErrors.displayName || nextErrors.roleDivision || nextErrors.impression) {
-      setStatus("");
+      setStatus(null);
       return;
     }
 
     setSubmitting(true);
-    setStatus("");
+    setStatus(null);
 
     try {
       const minimumDelay = new Promise((resolve) => window.setTimeout(resolve, 700));
@@ -47,18 +47,19 @@ export default function ImpressionForm() {
       const payload = (await response.json().catch(() => null)) as { error?: string; impression?: { isPositive?: boolean } } | null;
 
       if (!response.ok) {
-        setStatus(payload?.error ?? "Your impression could not be submitted yet. Please try again.");
+        setStatus({ message: payload?.error ?? "Your impression could not be submitted yet. Please try again.", type: "error" });
         return;
       }
 
       formElement.reset();
-      setStatus(
-        payload?.impression?.isPositive
+      setStatus({
+        message: payload?.impression?.isPositive
           ? "Thank you. Your impression has been saved and may appear in the testimonials section."
           : "Thank you. Your impression has been saved for Rexy.",
-      );
+        type: "success",
+      });
     } catch {
-      setStatus("Your impression could not be submitted yet. Please check your connection and try again.");
+      setStatus({ message: "Your impression could not be submitted yet. Please check your connection and try again.", type: "error" });
     } finally {
       setSubmitting(false);
     }
@@ -121,7 +122,18 @@ export default function ImpressionForm() {
             >
               {submitting ? "Submitting..." : "Submit Impression"} <Send className="size-4" />
             </button>
-            {status ? <p className="rounded-2xl border border-white/10 bg-white/5 p-3 text-sm text-slate-100">{status}</p> : null}
+            {status ? (
+              <p
+                className={cn(
+                  "rounded-2xl border p-3 text-sm",
+                  status.type === "success"
+                    ? "border-emerald-300/40 bg-emerald-500/15 text-emerald-100"
+                    : "border-red-300/30 bg-red-500/10 text-red-100",
+                )}
+              >
+                {status.message}
+              </p>
+            ) : null}
           </form>
         </div>
       </div>

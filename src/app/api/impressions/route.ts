@@ -32,16 +32,30 @@ export async function POST(request: Request) {
       return rateLimit.response;
     }
 
-    const preparedImpression = prepareImpressionForStorage(body.impression);
-    const impression = await prisma.clientImpression.create({
+    const originalImpression = body.impression;
+    const preparedImpression = prepareImpressionForStorage(originalImpression);
+    const createdImpression = await prisma.clientImpression.create({
       data: {
         displayName: body.displayName,
         roleDivision: body.roleDivision,
         impression: preparedImpression,
-        originalImpression: body.impression,
+        originalImpression,
         isPositive: isPositiveImpression(preparedImpression),
         ipHash: getClientFingerprint(request),
       },
+      select: {
+        id: true,
+      },
+    });
+
+    await prisma.$executeRaw`
+      UPDATE "ClientImpression"
+      SET "originalImpression" = ${originalImpression}
+      WHERE "id" = ${createdImpression.id}
+    `;
+
+    const impression = await prisma.clientImpression.findUniqueOrThrow({
+      where: { id: createdImpression.id },
       select: {
         id: true,
         isPositive: true,
