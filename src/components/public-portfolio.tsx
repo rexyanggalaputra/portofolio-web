@@ -366,11 +366,11 @@ function Projects({ projects }: { projects: Project[] }) {
           ))}
         </div>
       </div>
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-[repeat(auto-fit,minmax(18rem,20rem))] xl:justify-center">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {visible.length ? visible.map((project) => (
           <Card key={project.id} className="overflow-hidden transition hover:-translate-y-1 hover:border-violet-300/60">
             <div className="relative aspect-[16/10] xl:aspect-[16/9]">
-              <Image src={project.imageUrl} alt={`${project.title} project preview`} fill sizes="(min-width: 1280px) 320px, (min-width: 768px) 50vw, 100vw" className="object-cover" />
+              <Image src={project.imageUrl} alt={`${project.title} project preview`} fill sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
             </div>
             <div className="p-4 xl:p-3.5">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-violet-300">{project.category}</p>
