@@ -366,30 +366,30 @@ function Projects({ projects }: { projects: Project[] }) {
           ))}
         </div>
       </div>
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
         {visible.length ? visible.map((project) => (
           <Card key={project.id} className="overflow-hidden transition hover:-translate-y-1 hover:border-violet-300/60">
-            <div className="relative aspect-[16/10] xl:aspect-[16/9]">
-              <Image src={project.imageUrl} alt={`${project.title} project preview`} fill sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
+            <div className="relative aspect-[16/10] lg:aspect-[16/9]">
+              <Image src={project.imageUrl} alt={`${project.title} project preview`} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" />
             </div>
-            <div className="p-4 xl:p-3.5">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-violet-300">{project.category}</p>
-              <h3 className="font-semibold xl:text-sm">{project.title}</h3>
-              <p className="mt-2 min-h-12 text-sm leading-6 text-slate-400 xl:min-h-0 xl:text-xs xl:leading-5">{project.description}</p>
-              <div className="mt-4 flex flex-wrap gap-2 xl:mt-3">
+            <div className="p-3 sm:p-4 lg:p-3.5">
+              <p className="mb-2 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-violet-300 sm:text-xs sm:tracking-[0.16em]">{project.category}</p>
+              <h3 className="text-sm font-semibold sm:text-base lg:text-sm">{project.title}</h3>
+              <p className="mt-2 min-h-12 text-xs leading-5 text-slate-400 sm:text-sm sm:leading-6 lg:min-h-0 lg:text-xs lg:leading-5">{project.description}</p>
+              <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                 {project.tags.slice(0, 3).map((tag) => (
-                  <span key={tag} className="text-xs text-violet-200">{tag}</span>
+                  <span key={tag} className="text-[0.68rem] text-violet-200 sm:text-xs">{tag}</span>
                 ))}
               </div>
-              <div className="mt-5 flex flex-wrap gap-3 xl:mt-4 xl:gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 {project.portfolioUrl ? (
                   <a
                     href={project.portfolioUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-violet-300/35 bg-violet-500/10 px-4 text-sm font-semibold text-white transition hover:border-violet-300/70 hover:bg-violet-500/20 xl:min-h-9 xl:px-3 xl:text-xs"
+                    className="inline-flex min-h-8 items-center justify-center gap-1.5 rounded-md border border-violet-300/35 bg-violet-500/10 px-2 text-[0.68rem] font-semibold text-white transition hover:border-violet-300/70 hover:bg-violet-500/20 sm:min-h-10 sm:gap-2 sm:px-4 sm:text-sm lg:min-h-9 lg:px-3 lg:text-xs"
                   >
-                    View Demo <ExternalLink className="size-4" />
+                    View Demo <ExternalLink className="size-3.5 sm:size-4" />
                   </a>
                 ) : null}
                 {project.repoUrl ? (
@@ -397,9 +397,9 @@ function Projects({ projects }: { projects: Project[] }) {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-4 text-sm font-semibold text-white transition hover:border-sky-300/70 xl:min-h-9 xl:px-3 xl:text-xs"
+                    className="inline-flex min-h-8 items-center justify-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-2 text-[0.68rem] font-semibold text-white transition hover:border-sky-300/70 sm:min-h-10 sm:gap-2 sm:px-4 sm:text-sm lg:min-h-9 lg:px-3 lg:text-xs"
                   >
-                    View Github <Github className="size-4" />
+                    View Github <Github className="size-3.5 sm:size-4" />
                   </a>
                 ) : null}
               </div>
