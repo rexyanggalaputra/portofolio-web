@@ -9,10 +9,11 @@ Modern portfolio website for Rexy Anggala Putra, built with Next.js, TypeScript,
 - Database-backed portfolio content for profile, skills, experiences, projects, FAQ, impressions, messages, and visit analytics
 - Featured Projects updated with real demo links and optional GitHub links
 - Feedback page at `/feedback` for collecting visitor impressions
-- Testimonials sourced from positive impressions stored in PostgreSQL
+- Feedback storage keeps both raw visitor text and summarized English testimonial text
+- Testimonials sourced from positive impressions stored in PostgreSQL and shuffled daily
 - Contact form with server validation and rate limiting
 - Visitor session timer plus anonymous active-duration tracking
-- Responsive layout for desktop, tablet, and mobile
+- Responsive layout for desktop, tablet, and mobile, including a compact mobile navigation drawer
 
 ## Tech Stack
 
@@ -124,6 +125,13 @@ npm run prisma:seed
 - `VisitSession`
 - `RateLimitEvent`
 
+## Feedback Storage Notes
+
+- `ClientImpression.impression` stores the concise English version used for public testimonial display
+- `ClientImpression.originalImpression` stores the original visitor text submitted from the feedback form
+- Only positive impressions are eligible for `What Clients Say`
+- The public site shows up to 10 positive impressions per day in a deterministic daily shuffle
+
 ## Public Routes
 
 - `/`
@@ -147,7 +155,9 @@ npm run prisma:seed
 
 - CV download points to the profile CV link stored in PostgreSQL
 - Featured projects now support separate demo and GitHub links
+- Featured projects include categories such as Data Visualization, Data Science, and Web Development
 - Testimonials are selected from positive impressions only
+- Raw visitor impression text is preserved in PostgreSQL for each new feedback submission
 - The site currently has no admin dashboard or CMS UI
 
 ## Validation

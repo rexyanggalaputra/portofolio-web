@@ -108,34 +108,54 @@ function Navbar() {
           </span>
           <span>RexyPort</span>
         </a>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {navItems.map((item) => (
             <a key={item.href} href={item.href} className={cn("nav-link rounded-md px-3 py-2 text-sm text-slate-300 transition hover:text-white", activeSection === item.href.slice(1) && "nav-link-active text-white")}>
               {item.label}
             </a>
           ))}
         </div>
-        <a href="#contact" className="hidden min-h-10 items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-sky-500 px-5 text-sm font-semibold text-white shadow-glow sm:inline-flex">
+        <a href="#contact" className="hidden min-h-10 items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-sky-500 px-5 text-sm font-semibold text-white shadow-glow lg:inline-flex">
           Hire Me <Rocket className="size-4" />
         </a>
-        <button type="button" aria-label="Open navigation" onClick={() => setOpen(true)} className="grid size-11 place-items-center rounded-md border border-border bg-white/5 md:hidden">
+        <button type="button" aria-label="Open navigation" onClick={() => setOpen(true)} className="grid size-11 place-items-center rounded-md border border-border bg-white/5 lg:hidden">
           <Menu className="size-5" />
         </button>
       </nav>
       {open ? (
-        <div className="fixed inset-0 z-50 bg-[#050917]/98 p-4 backdrop-blur md:hidden">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold">RexyPort</span>
-            <button type="button" aria-label="Close navigation" onClick={() => setOpen(false)} className="grid size-11 place-items-center rounded-md border border-border">
-              <X className="size-5" />
-            </button>
-          </div>
-          <div className="mt-8 grid gap-2">
-            {navItems.map((item) => (
-              <a key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-md border border-border bg-white/5 px-4 py-4 text-lg">
-                {item.label}
+        <div className="fixed inset-0 z-50 bg-[#020617]/90 p-3 backdrop-blur-md lg:hidden" onClick={() => setOpen(false)}>
+          <div className="ml-auto flex max-h-[calc(100svh-1.5rem)] w-[min(20rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071225] shadow-[0_24px_80px_rgba(0,0,0,0.55)]" onClick={(event) => event.stopPropagation()}>
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+              <a href="#home" onClick={() => setOpen(false)} className="flex items-center gap-2 font-semibold">
+                <span className="grid size-8 place-items-center rounded-lg border border-violet-400/50 bg-violet-500/20 text-violet-100">
+                  <ShieldCheck className="size-4" />
+                </span>
+                <span>RexyPort</span>
               </a>
-            ))}
+              <button type="button" aria-label="Close navigation" onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-lg border border-white/15 bg-white/7 text-slate-100">
+                <X className="size-5" />
+              </button>
+            </div>
+            <div className="grid gap-1.5 overflow-y-auto p-3">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "rounded-lg border px-4 py-3 text-sm font-semibold transition",
+                    activeSection === item.href.slice(1)
+                      ? "border-cyan-300/35 bg-cyan-400/12 text-white"
+                      : "border-white/8 bg-white/[0.03] text-slate-300 hover:border-violet-300/40 hover:bg-white/7 hover:text-white",
+                  )}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+            <a href="#contact" onClick={() => setOpen(false)} className="m-3 mt-0 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-violet-500 to-cyan-500 px-4 text-sm font-semibold text-white shadow-glow">
+              Hire Me <Rocket className="size-4" />
+            </a>
           </div>
         </div>
       ) : null}
@@ -503,9 +523,10 @@ function Experience({ experiences }: { experiences: Experience[] }) {
               <div>
                 <h3 className="text-xl font-semibold">{item.role}</h3>
                 <p className="text-sm text-slate-400">{item.company} - {item.location}</p>
+                <p className="mt-2 inline-flex w-fit rounded-md border border-border bg-white/5 px-3 py-2 text-sm text-slate-300 md:hidden">{item.period}</p>
                 <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">{item.description}</p>
               </div>
-              <p className="shrink-0 rounded-md border border-border bg-white/5 px-3 py-2 text-sm text-slate-300">{item.period}</p>
+              <p className="hidden shrink-0 rounded-md border border-border bg-white/5 px-3 py-2 text-sm text-slate-300 md:block">{item.period}</p>
             </div>
           </Card>
         ))}

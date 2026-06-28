@@ -1,6 +1,6 @@
 # Portfolio Product Notes
 
-> Status: Implemented baseline, updated June 26, 2026
+> Status: Implemented baseline, updated June 28, 2026
 > Project type: Personal portfolio web app
 > Owner: Rexy Anggala Putra
 > Stack: Next.js 15, TypeScript, Tailwind CSS, Prisma, PostgreSQL, Three.js
@@ -46,6 +46,7 @@ The site is designed for recruiters, clients, collaborators, and learners who wa
 - FAQ section
 - Contact section
 - Visitor session timer
+- Responsive mobile navigation drawer with compact right-side panel overlay
 
 ### Standalone public page
 
@@ -141,6 +142,7 @@ The featured project area has been updated to reflect real project links provide
 - Nobel Prize Analysis Dashboard
 - Simple Sales Performance Dashboard
 - Diabetes Classification
+- Mathematics World Web
 
 ## 7. Testimonial / Impression Flow
 
@@ -151,14 +153,16 @@ The testimonial area now supports real feedback collection.
 1. Visitor opens `/feedback`
 2. Visitor submits name or alias, role/division, and impression
 3. Submission is validated and rate-limited
-4. Impression is stored in PostgreSQL
-5. Positive impressions become candidates for testimonial display
+4. The original visitor text is stored in PostgreSQL as `originalImpression`
+5. The message is summarized and normalized into concise English for public display storage
+6. Positive impressions become candidates for testimonial display
 
 ### Display rules
 
 - the public testimonial area only shows positive impressions
-- the API currently randomizes from positive visible entries
-- up to 10 entries are shown in rotation
+- the public site shows only 10 positive visible entries at a time
+- the displayed set is shuffled deterministically per day
+- the public-facing testimonial copy is the concise English version, not the raw visitor text
 
 ## 8. Functional Requirements Implemented
 
@@ -166,9 +170,12 @@ The testimonial area now supports real feedback collection.
 - Download CV button connected to stored CV link
 - Project demo links and optional GitHub links
 - Feedback page and testimonial ingestion
+- Raw impression text stored in PostgreSQL alongside summarized English testimonial text
 - Anonymous visitor analytics with active duration tracking
 - FAQ search and expand/collapse interaction
 - Responsive design for desktop, tablet, and mobile
+- Compact mobile menu drawer with solid background panel to avoid overlap with hero content
+- Mobile experience cards show period directly below company and location
 - Modern premium hero with interactive Three.js visual
 
 ## 9. Known Non-Scope Items
