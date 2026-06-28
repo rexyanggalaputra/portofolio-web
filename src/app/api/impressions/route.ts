@@ -45,6 +45,7 @@ export async function POST(request: Request) {
       select: {
         id: true,
         isPositive: true,
+        originalImpression: true,
         createdAt: true,
       },
     });
