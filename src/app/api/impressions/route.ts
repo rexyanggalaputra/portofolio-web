@@ -1,53 +1,16 @@
 import { impressionSchema } from "@/lib/server/schemas";
 import { prisma } from "@/lib/server/prisma";
+import { isPositiveImpression, pickDailyItems, prepareImpressionForStorage } from "@/lib/server/impressions";
 import { assertRateLimit, getClientFingerprint, json, validationError } from "@/lib/server/request";
-
-const positiveKeywords = [
-  "good",
-  "great",
-  "excellent",
-  "amazing",
-  "helpful",
-  "clear",
-  "patient",
-  "insightful",
-  "reliable",
-  "valuable",
-  "positive",
-  "recommended",
-  "impressive",
-  "useful",
-  "supportive",
-  "professional",
-  "bagus",
-  "baik",
-  "keren",
-  "mantap",
-  "jelas",
-  "sabar",
-  "membantu",
-  "informatif",
-  "rapi",
-  "responsif",
-  "recommended",
-];
-
-const negativeKeywords = ["bad", "poor", "confusing", "late", "slow", "unclear", "buruk", "jelek", "bingung", "kurang", "lama"];
 
 export async function GET() {
   const items = await prisma.clientImpression.findMany({
     where: { isVisible: true, isPositive: true },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    take: 50,
+    take: 100,
   });
 
-  const shuffled = items
-    .map((item) => ({ item, sort: Math.random() }))
-    .sort((left, right) => left.sort - right.sort)
-    .slice(0, 10)
-    .map(({ item }) => item);
-
-  return json({ impressions: shuffled });
+  return json({ impressions: pickDailyItems(items, 10) });
 }
 
 export async function POST(request: Request) {
@@ -69,12 +32,13 @@ export async function POST(request: Request) {
       return rateLimit.response;
     }
 
+    const preparedImpression = prepareImpressionForStorage(body.impression);
     const impression = await prisma.clientImpression.create({
       data: {
         displayName: body.displayName,
         roleDivision: body.roleDivision,
-        impression: body.impression,
-        isPositive: isPositiveImpression(body.impression),
+        impression: preparedImpression,
+        isPositive: isPositiveImpression(preparedImpression),
         ipHash: getClientFingerprint(request),
       },
       select: {
@@ -88,12 +52,4 @@ export async function POST(request: Request) {
   } catch (error) {
     return validationError(error);
   }
-}
-
-function isPositiveImpression(value: string) {
-  const normalized = value.toLowerCase();
-  const positiveScore = positiveKeywords.reduce((score, keyword) => score + Number(normalized.includes(keyword)), 0);
-  const negativeScore = negativeKeywords.reduce((score, keyword) => score + Number(normalized.includes(keyword)), 0);
-
-  return positiveScore > 0 && positiveScore >= negativeScore;
 }

@@ -1,5 +1,6 @@
 import PublicPortfolio from "@/components/public-portfolio";
 import { prisma } from "@/lib/server/prisma";
+import { pickDailyItems } from "@/lib/server/impressions";
 import type { ClientImpression, Experience, PortfolioData, Profile, Project, Skill } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +23,7 @@ async function getPortfolioData(): Promise<PortfolioData> {
     prisma.clientImpression.findMany({
       where: { isVisible: true, isPositive: true },
       orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-      take: 50,
+      take: 100,
     }),
   ]);
 
@@ -69,7 +70,7 @@ async function getPortfolioData(): Promise<PortfolioData> {
     featured: project.featured,
   }));
 
-  const impressions: ClientImpression[] = pickRandomItems(dbImpressions, 10).map((item) => ({
+  const impressions: ClientImpression[] = pickDailyItems(dbImpressions, 10).map((item) => ({
     id: item.id,
     displayName: item.displayName,
     roleDivision: item.roleDivision,
@@ -101,15 +102,4 @@ function formatPeriod(startDate: Date, endDate: Date | null, isCurrent: boolean)
   const start = formatter.format(startDate);
   const end = isCurrent || !endDate ? "Present" : formatter.format(endDate);
   return `${start} - ${end}`;
-}
-
-function pickRandomItems<T>(items: T[], count: number) {
-  const shuffled = [...items];
-
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
-  }
-
-  return shuffled.slice(0, count);
 }

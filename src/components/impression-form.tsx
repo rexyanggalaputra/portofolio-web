@@ -81,7 +81,7 @@ export default function ImpressionForm() {
             </div>
           </div>
           <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-            Share your impression after collaborating, learning, or working with Rexy. Positive impressions may be selected to appear in the
+            Share your impression after collaborating, learning, or working with Rexy. Your impressions may be selected to appear in the
             &nbsp;What Clients Say section.
           </p>
 
@@ -91,7 +91,7 @@ export default function ImpressionForm() {
               <input
                 name="displayName"
                 className={inputClass}
-                placeholder="Mis. Tim Analytics, Business User, atau nama panggilan"
+                placeholder="e.g. Analytics Team, Business User, or a nickname"
               />
               {errors.displayName ? <p className="mt-2 text-sm text-red-200">{errors.displayName}</p> : null}
             </div>
@@ -100,7 +100,7 @@ export default function ImpressionForm() {
               <input
                 name="roleDivision"
                 className={inputClass}
-                placeholder="Mis. Finance Team, Data Analyst, Student, Product Team"
+                placeholder="e.g. Finance Team, Data Analyst, Student, Product Team"
               />
               {errors.roleDivision ? <p className="mt-2 text-sm text-red-200">{errors.roleDivision}</p> : null}
             </div>
@@ -110,7 +110,7 @@ export default function ImpressionForm() {
                 name="impression"
                 rows={6}
                 className={cn(inputClass, "py-3")}
-                placeholder="Mis. Rexy sangat membantu menjelaskan insight, dashboard-nya jelas, dan kolaborasinya enak."
+                placeholder="e.g. Rexy was helpful in explaining insights, the dashboard was clear, and the collaboration felt smooth."
               />
               {errors.impression ? <p className="mt-2 text-sm text-red-200">{errors.impression}</p> : null}
             </div>
