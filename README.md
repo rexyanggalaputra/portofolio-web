@@ -64,9 +64,24 @@ Create `.env` and fill in the required values:
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
 DIRECT_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
 RATE_LIMIT_SALT="replace-with-a-long-random-secret"
+TELEGRAM_BOT_TOKEN="replace-with-your-telegram-bot-token"
+TELEGRAM_CHAT_ID="replace-with-your-telegram-chat-id"
 ```
 
 Do not commit `.env`.
+
+### Telegram Contact Notifications
+
+The contact form can send a Telegram notification after a message is stored in PostgreSQL. Telegram delivery is server-side only; if the Telegram env values are missing or the Telegram API fails, the contact form still succeeds and the message remains saved in the `Message` table.
+
+Set up Telegram:
+
+1. Open Telegram and chat with [BotFather](https://t.me/BotFather).
+2. Send `/newbot`, follow the prompts, and copy the bot token into `TELEGRAM_BOT_TOKEN`.
+3. Send any message to your new bot from the Telegram account that should receive notifications.
+4. Open `https://api.telegram.org/botYOUR_BOT_TOKEN/getUpdates` in a browser and copy the `chat.id` value into `TELEGRAM_CHAT_ID`.
+5. Add both env variables to local `.env`.
+6. In Vercel, add both values in Project Settings > Environment Variables for Production, Preview, and Development as needed, then redeploy.
 
 ## Getting Started
 

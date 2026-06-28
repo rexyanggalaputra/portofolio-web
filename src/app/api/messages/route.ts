@@ -1,6 +1,43 @@
 import { messageSchema } from "@/lib/server/schemas";
 import { prisma } from "@/lib/server/prisma";
 import { assertRateLimit, getClientFingerprint, json, validationError } from "@/lib/server/request";
+import { sendTelegramMessage } from "@/lib/telegram";
+
+function formatIndonesiaTime(date: Date) {
+  const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  });
+  const timeFormatter = new Intl.DateTimeFormat("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Jakarta",
+  });
+
+  return `${dateFormatter.format(date)}, ${timeFormatter.format(date).replace(".", ":")} WIB`;
+}
+
+function formatTelegramMessage(message: { name: string; email: string | null; content: string; createdAt: Date }) {
+  return `📩 New Portfolio Message
+
+👤 Pengirim:
+${message.name}
+
+📧 Email:
+${message.email || "-"}
+
+💬 Isi Pesan:
+${message.content}
+
+🕒 Waktu Masuk:
+${formatIndonesiaTime(message.createdAt)}
+
+📌 Source:
+Portfolio Contact Form`;
+}
 
 export async function POST(request: Request) {
   try {
@@ -30,11 +67,16 @@ export async function POST(request: Request) {
       },
       select: {
         id: true,
+        name: true,
+        email: true,
+        content: true,
         createdAt: true,
       },
     });
 
-    return json({ ok: true, message }, { status: 201 });
+    await sendTelegramMessage(formatTelegramMessage(message));
+
+    return json({ ok: true, message: { id: message.id, createdAt: message.createdAt } }, { status: 201 });
   } catch (error) {
     return validationError(error);
   }
